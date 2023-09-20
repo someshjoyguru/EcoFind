@@ -17,14 +17,17 @@ To get started with EcoFind, follow these installation steps:
 
 2. Navigate to the project directory:
 
-   ```cd ecofind
+   ```bash
+   cd ecofind
 
 3. Install dependencies:
 
-   ```pip install -r requirements.txt
+   ```bash
+   pip install -r requirements.txt
 
 4. Run the application:
 
+   ```bash
    streamlit run _Home.py
 
 ## Usage
