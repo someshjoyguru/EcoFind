@@ -22,7 +22,7 @@ To get started with EcoFind, follow these installation steps:
 
 4. Create "trained_model" folder
 
-5. Go to the 3 Google Colab notebooks using the link in following order:
+5. Go to following 3 Google Colab notebooks:
    1. dataset1
    2. dataset2
    3. merged
@@ -47,6 +47,7 @@ To get started with EcoFind, follow these installation steps:
 
    ```bash
    streamlit run _Home.py
+   ```
 
 ## Usage
 
