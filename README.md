@@ -20,12 +20,30 @@ To get started with EcoFind, follow these installation steps:
    ```bash
    cd ecofind
 
-3. Install dependencies:
+4. Create "trained_model" folder
+
+5. Go to the 3 Google Colab notebooks using the link in following order:
+   1. dataset1
+   2. dataset2
+   3. merged
+
+6. Upload the datasets given in repository for respective Google Colab notebook.
+
+7. Run the 3 Google Colab notebooks in following order:
+   1. dataset1
+   2. dataset2
+   3. merged
+   
+   (Note: After performing dataset1 and dataset2, upload the products1 and products2 pickle files to the "merged" notebook and run it.)
+
+8. Upload the "products" and "similarity" pickle file to the trained_model folder
+
+9. Install dependencies:
 
    ```bash
    pip install -r requirements.txt
 
-4. Run the application:
+10. Run the application:
 
    ```bash
    streamlit run _Home.py
