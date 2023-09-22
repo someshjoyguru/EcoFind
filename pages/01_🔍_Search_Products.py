@@ -7,31 +7,53 @@ from PIL import Image
 from io import BytesIO
 
 # Load product data and similarity matrix from pickle files
-product_list = pickle.load(open("../trained_model/products.pkl", "rb"))
+product_list = pickle.load(open("products.pkl", "rb"))
 products = pd.DataFrame(product_list)
-similarity = pickle.load(open("../trained_model/similarity.pkl", "rb"))
+similarity = pickle.load(open("similarity.pkl", "rb"))
 
 recommended_products = []
 
 
 # Function to recommend similar products based on user input
 def recommend(product):
+    # Find the index of the selected product in the products DataFrame
     product_index = products[products["name"] == product].index[0]
+    
+    # Get the category (Classification) of the input product
+    category = products.loc[product_index, "Classification"]
+    
+    # Get the similarity scores between the selected product and all other products
     distances = similarity[product_index]
-    product_list = sorted(list(enumerate(distances)), reverse=True, key=lambda x: x[1])[
-        :5
-    ]
-    for i in product_list:
-        product = [
-            products.get("name")[i[0]],
-            products.get("url")[i[0]],
-            products.get("Classification")[i[0]],
-            products.get("ratings")[i[0]],
-            products.get("no_of_ratings")[i[0]],
-            products.get("image")[i[0]],
-        ]
-        recommended_products.append(product)
+    
+    # Initialize an empty list to store the recommended products
+    # recommended_products = []
+    
+    # Loop through all products and check if they belong to the same category
+    for i, dist in enumerate(distances):
+        # Skip the current product (the one we're comparing to itself)
+        if i == product_index:
+            continue
+        
+        # Check if the product belongs to the same category as the input product
+        if products.loc[i, "Classification"] == category:
+            product_details = [
+                products.loc[i, "name"],
+                products.loc[i, "url"],
+                products.loc[i, "Classification"],
+                products.loc[i, "ratings"],
+                products.loc[i, "no_of_ratings"],
+                products.loc[i, "image"],
+            ]
+            
+            # Append the product details to the recommended_products list
+            recommended_products.append(product_details)
+            
+            # Break the loop when we have found 5 similar items from the same category
+            if len(recommended_products) == 5:
+                break
+    
     return recommended_products
+
 
 
 # Function to check if an image URL is valid
@@ -89,7 +111,9 @@ st.header("Your Gateway to _Conscious Consumerism_ 😊😀")
 selected_product = st.selectbox(
     "Enter product name and category", products["name"].values
 )
-st.text("Please wait for some time while we curate your personalized product list!⏳⌛")
+st.caption("Please be patient while we curate your personalized product list.")
+st.caption("This may take a moment or two.⏳⌛")
+
 
 # Button to initiate the product curation process
 if st.button("Curate Personalised Product List"):
@@ -98,42 +122,46 @@ if st.button("Curate Personalised Product List"):
 
     # Display recommended products with details and images
     for i in recommendations:
-        if i[5] == "0":
-            # Use the Pexels API to fetch an image if the image URL is not available
-            url = "https://api.pexels.com/v1/search"
-            query = i[0]
-            per_page = 1
-            headers = {
-                "Authorization": "tN5RuIJaOdUZYQBBhCybr0ZziUE0zZ95N8u5mNyKPpnDJsB1ek3MUO22"
-            }
-            params = {"query": query, "per_page": per_page}
-            response = requests.get(url, headers=headers, params=params)
-
-            # Check if the request was successful (status code 200)
-            if response.status_code == 200:
-                global data
-                data = response.json()
-            else:
-                print(f"Error shown through terminal: {response.status_code}")
-            original_image_url = data["photos"][0]["src"]["original"]
-        else:
-            original_image_url = str(i[5])
+        original_image_url = str(i[5])
 
         # Display product information and image in two columns
         colx1, colx2 = st.columns(spec=[5, 3])
         colx1.subheader(i[0], divider="rainbow")
         col12, col22 = colx1.columns(2)
         col12.caption("Category: " + i[2])
+
+        # Check if ratings are available and display them
         if i[3] == "No ratings available":
             col12.caption("Ratings: " + str(i[3]))
         else:
             num = float("".join(str(i[3]).split()))
             col12.caption("Ratings: " + str(i[3]) + stars_in_ratings(num))
+
         col22.caption("[Go to Website](" + i[1] + ")")
         col12.caption("No. of ratings: " + str(i[4]))
+
+        # Check if the image URL is available
         if is_image_url(original_image_url):
             # Display the image
             colx2.image(original_image_url, width=200)
         else:
-            # Display "Image not available" message
-            colx2.write("Image not available")
+            # Fetch an image from the Pexels API
+            url = "https://api.pexels.com/v1/search"
+            query = i[0]
+            per_page = 1
+            headers = {
+                "Authorization": st.secrets["Authorization_token"]
+            }
+            params = {"query": query, "per_page": per_page}
+            response = requests.get(url, headers=headers, params=params)
+
+            # Check if the request was successful (status code 200)
+            if response.status_code == 200:
+                data = response.json()
+                original_image_url = data["photos"][0]["src"]["original"]
+                colx2.caption("Image retrieved from Pexels API")
+                colx2.caption("Please note that this image may not be related to the product")
+                colx2.image(original_image_url, width=200)
+            else:
+                colx2.write("Image not available")
+            
