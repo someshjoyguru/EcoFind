@@ -30,9 +30,6 @@ def recommend(product):
     
     # Loop through all products and check if they belong to the same category
     for i, dist in enumerate(distances):
-        # Skip the current product (the one we're comparing to itself)
-        if i == product_index:
-            continue
         
         # Check if the product belongs to the same category as the input product
         if products.loc[i, "Classification"] == category:
