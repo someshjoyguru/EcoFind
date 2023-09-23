@@ -42,3 +42,6 @@ EcoFind is designed to provide users with a seamless experience in discovering e
 3. Click the "Curate Personalised Product List" button to receive personalized product recommendations.
 
 4. Explore the recommended products, including their ratings, descriptions, and direct purchase links.
+
+
+[<img src="https://github.com/someshjoyguru/EcoFind/assets/99559848/50c413a1-e1b8-4f87-a2fb-06e59ce626b1" width="50%">](https://youtu.be/NISJYRUALYw)
