@@ -43,5 +43,4 @@ EcoFind is designed to provide users with a seamless experience in discovering e
 
 4. Explore the recommended products, including their ratings, descriptions, and direct purchase links.
 
-
-[<img src="https://github.com/someshjoyguru/EcoFind/assets/99559848/50c413a1-e1b8-4f87-a2fb-06e59ce626b1" width="50%">](https://www.youtube.com/watch?v=NISJYRUALYw "EcoFind - Your Eco-Friendly Shopping Companion")
+[![EcoFind - Your Eco-Friendly Shopping Companion](https://github.com/someshjoyguru/EcoFind/assets/99559848/50c413a1-e1b8-4f87-a2fb-06e59ce626b1)](https://www.youtube.com/watch?v=NISJYRUALYw)
