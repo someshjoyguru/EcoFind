@@ -2,6 +2,9 @@
 
 Welcome to EcoFind, your gateway to conscious consumerism! EcoFind is a web application that empowers users to discover, learn, and embrace eco-friendly living. With a curated selection of green, sustainable, and eco-friendly products, EcoFind makes it easy for users to shop with a clear conscience while making a positive impact on the planet.
 
+![EcoFind-ppt-8](https://github.com/someshjoyguru/EcoFind/assets/99559848/1f9f79d7-869f-49a6-bf65-ae4dcb01ba19)
+I have used streamlit to create the web app for EcoFind.
+
 ## Table of Contents
 - [Installation](#installation)
 - [Usage](#usage)
